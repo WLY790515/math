@@ -857,6 +857,18 @@ function initAuth() {
     function showError(message) {
         authError.textContent = message;
         authError.classList.remove('d-none');
+        authError.classList.remove('alert-success');
+        authError.classList.add('alert-danger');
+        setTimeout(() => {
+            authError.classList.add('d-none');
+        }, 3000);
+    }
+
+    function showSuccess(message) {
+        authError.textContent = message;
+        authError.classList.remove('d-none');
+        authError.classList.remove('alert-danger');
+        authError.classList.add('alert-success');
         setTimeout(() => {
             authError.classList.add('d-none');
         }, 3000);
@@ -924,7 +936,7 @@ function initAuth() {
 
     loginForm?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
+        const loginField = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
 
         try {
@@ -933,7 +945,7 @@ function initAuth() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ loginField, password })
             });
             const result = await response.json();
 
@@ -942,6 +954,7 @@ function initAuth() {
                 const modal = bootstrap.Modal.getInstance(authModal);
                 modal.hide();
                 loginForm.reset();
+                showSuccess('登录成功');
             } else {
                 showError(result.message);
             }
