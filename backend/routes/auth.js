@@ -5,7 +5,10 @@ const db = require('../db/database');
 
 const router = express.Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-here-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required in production');
+}
 const JWT_EXPIRES_IN = '1h';
 
 router.post('/register', async (req, res) => {

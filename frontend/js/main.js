@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
-                            <h4>数学工具箱 v1.0.0</h4>
+                            <h4>数学工具箱 v1.0.1</h4>
                             <p>一个功能强大的在线数学工具箱，支持基础计算、代数工具、几何绘图和统计分析。</p>
                             <hr>
                             <h6>主要功能</h6>

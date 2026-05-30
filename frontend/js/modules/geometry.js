@@ -132,12 +132,6 @@ class GeometryTools {
         }
 
         ctx.restore();
-
-        const coordsDisplay = document.getElementById('geoCoords');
-        if (coordsDisplay) {
-            const pos = this.getMousePos({ clientX: event?.clientX || 0, clientY: event?.clientY || 0 });
-            coordsDisplay.textContent = `X: ${Math.round(pos.x)}, Y: ${Math.round(pos.y)}`;
-        }
     }
 
     drawShape(shape) {

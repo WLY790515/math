@@ -1,6 +1,6 @@
 {
   "name": "math-toolbox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A powerful online math toolbox supporting basic calculations, algebra tools, geometry calculations, and statistical analysis",
   "main": "backend/server.js",
   "scripts": {

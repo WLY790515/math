@@ -453,7 +453,7 @@ try {
         </div>
         
         <div class="footer">
-            <p>数学工具箱 v1.0.0 | 测试报告生成于 ${new Date().toLocaleString()} | 总耗时: ${reportData.summary.duration}</p>
+            <p>数学工具箱 v1.0.1 | 测试报告生成于 ${new Date().toLocaleString()} | 总耗时: ${reportData.summary.duration}</p>
         </div>
     </div>
     

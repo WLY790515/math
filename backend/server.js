@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 
 const authRoutes = require('./routes/auth');
+const logsRoutes = require('./routes/logs');
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/logs', logsRoutes);
 
 app.use(express.static(path.join(__dirname, '../frontend')));
 

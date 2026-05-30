@@ -81,9 +81,7 @@ class Calculator {
                 this.currentValue = String(Math.sqrt(current));
                 break;
             case 'power':
-                this.pendingOperator = 'power';
-                this.previousValue = this.currentValue;
-                this.waitingForOperand = true;
+                this.handleOperator('power');
                 return;
             case 'pi':
                 this.currentValue = String(Math.PI);

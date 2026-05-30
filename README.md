@@ -2,7 +2,7 @@
 
 一个功能强大的在线数学工具箱，支持基础计算、代数工具、几何计算和统计分析。
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Tests](https://img.shields.io/badge/tests-93%20passed-brightgreen.svg)
 
@@ -161,13 +161,17 @@ math-toolbox/
 
 ## 📝 更新日志
 
-### v1.0.0 (2026-05-29)
+### v1.0.1 (2026-05-30)
 - ✅ 完成所有核心功能
 - ✅ 优化矩阵运算性能
 - ✅ 完善多语言支持
 - ✅ 添加操作记录功能
 - ✅ 通过所有93个测试
 - ✅ 移除移动端支持，专注Web应用
+- 🐛 修复：语法错误 - 删除多余的闭合大括号
+- 🐛 修复：引用未定义的 event 变量
+- 🔒 安全：JWT_SECRET 改为从环境变量读取，增强安全性
+- 🐛 修复：power 操作符处理不一致问题
 
 ## 🤝 贡献指南
 
