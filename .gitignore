@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+www/
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+*.zip
+
+# Mobile platforms (removed)
+android/
+ios/
+
+# Gradle
+gradle/
+*.gradle
+
+# Capacitor
+capacitor.config.json
+
+# Package locks (optional - uncomment if you want to exclude)
+# package-lock.json

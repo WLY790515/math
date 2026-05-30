@@ -1,23 +1,16 @@
 {
   "name": "math-toolbox",
   "version": "1.0.0",
-  "description": "Math toolbox application",
+  "description": "A powerful online math toolbox supporting basic calculations, algebra tools, geometry calculations, and statistical analysis",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "echo 'Building web app...'",
-    "cap:init": "npx cap init",
-    "cap:add:android": "npx cap add android",
-    "cap:copy": "npx cap copy",
-    "cap:sync": "npx cap sync"
+    "test": "cd tests && node run-tests.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "@capacitor/core": "^5.0.0",
-    "@capacitor/cli": "^5.0.0",
-    "@capacitor/android": "^5.0.0"
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
@@ -26,8 +19,24 @@
     "math",
     "toolbox",
     "calculator",
-    "mobile"
+    "algebra",
+    "geometry",
+    "statistics",
+    "education",
+    "web-app"
   ],
   "author": "Math Toolbox Team",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/math-toolbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/math-toolbox/issues"
+  },
+  "homepage": "https://github.com/yourusername/math-toolbox#readme",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  }
 }
