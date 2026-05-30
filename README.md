@@ -2,7 +2,7 @@
 
 一个功能强大的在线数学工具箱，支持基础计算、代数工具、几何计算和统计分析。
 
-![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Tests](https://img.shields.io/badge/tests-93%20passed-brightgreen.svg)
 
@@ -10,7 +10,7 @@
 
 | 版本 | 文件 | 说明 |
 |------|------|------|
-| v1.0.1 | [math-toolbox-v1.0.1.zip](./release/math-toolbox-v1.0.1.zip) | 最新版本 |
+| v1.0.2 | [math-toolbox-v1.0.2.zip](./release/math-toolbox-v1.0.2.zip) | 最新版本 |
 | v1.0.0 | [math-toolbox-v1.0.0.zip](./release/math-toolbox-v1.0.0.zip) | 初始版本 |
 
 ## ✨ 功能特点
@@ -168,7 +168,7 @@ math-toolbox/
 
 ## 📝 更新日志
 
-### v1.0.1 (2026-05-30)
+### v1.0.2 (2026-05-30)
 - ✅ 完成所有核心功能
 - ✅ 优化矩阵运算性能
 - ✅ 完善多语言支持
