@@ -11,6 +11,7 @@
 | 版本 | 文件 | 说明 |
 |------|------|------|
 | v1.0.2 | [math-toolbox-v1.0.2.zip](./release/math-toolbox-v1.0.2.zip) | 最新版本 |
+| v1.0.1 | [math-toolbox-v1.0.1.zip](./release/math-toolbox-v1.0.1.zip) | 完善登录系统 |
 | v1.0.0 | [math-toolbox-v1.0.0.zip](./release/math-toolbox-v1.0.0.zip) | 初始版本 |
 
 ## ✨ 功能特点
