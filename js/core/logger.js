@@ -100,22 +100,6 @@ class Logger {
         return this.logs.filter(log => new Date(log.timestamp).getTime() >= cutoffTime);
     }
 
-    async exportLogs() {
-        try {
-            const response = await fetch(`${this.apiUrl}/logs/export`);
-            if (response.ok) {
-                const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `math_toolbox_logs_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-            }
-        } catch (error) {
-            console.error('Error exporting logs:', error);
-        }
     }
-}
 
 const logger = new Logger();

@@ -219,12 +219,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // 导出日志按钮
-        const exportBtn = document.getElementById('exportLogs');
-        if (exportBtn) {
-            exportBtn.addEventListener('click', exportLogs);
-        }
-
         if (toolFilter) {
             toolFilter.addEventListener('change', refreshActivityLogs);
         }
@@ -845,48 +839,3 @@ document.addEventListener('DOMContentLoaded', function() {
     initApp();
 });
 
-// 导出日志函数
-function exportLogs() {
-    if (!logger) return;
-
-    // 使用后端导出功能
-    if (typeof logger.exportLogs === 'function') {
-        logger.exportLogs();
-    } else {
-        // 备用方案：前端导出
-        const logs = logger.logs;
-        
-        // 生成按时间命名的文件名
-        const now = new Date();
-        const timestamp = now.toISOString()
-            .replace(/T/g, '_')
-            .replace(/:/g, '-')
-            .replace(/\..+/, '');
-        const fileName = `math_toolbox_logs_${timestamp}.json`;
-
-        // 转换为JSON格式
-        const jsonContent = JSON.stringify(logs, null, 2);
-        
-        // 创建Blob对象
-        const blob = new Blob([jsonContent], { type: 'application/json' });
-        
-        // 生成下载链接
-        const url = URL.createObjectURL(blob);
-        
-        // 创建下载元素
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        a.style.display = 'none';
-        
-        // 触发下载
-        document.body.appendChild(a);
-        a.click();
-        
-        // 清理
-        setTimeout(() => {
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }, 100);
-    }
-}

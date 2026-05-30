@@ -127,27 +127,6 @@ app.delete('/api/logs', (req, res) => {
     }
 });
 
-// 导出日志
-app.get('/api/logs/export', (req, res) => {
-    try {
-        const logs = readAllLogs();
-        const fileName = generateFileName();
-        const filePath = path.join(logsDir, fileName);
-        
-        fs.writeFileSync(filePath, JSON.stringify(logs, null, 2));
-        
-        res.download(filePath, fileName, (err) => {
-            if (err) {
-                console.error('Error downloading logs:', err);
-                res.status(500).json({ error: 'Failed to download logs' });
-            }
-        });
-    } catch (error) {
-        console.error('Error exporting logs:', error);
-        res.status(500).json({ error: 'Failed to export logs' });
-    }
-});
-
 // 健康检查
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
