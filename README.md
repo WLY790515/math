@@ -6,6 +6,13 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Tests](https://img.shields.io/badge/tests-93%20passed-brightgreen.svg)
 
+## 📥 下载
+
+| 版本 | 文件 | 说明 |
+|------|------|------|
+| v1.0.1 | [math-toolbox-v1.0.1.zip](./release/math-toolbox-v1.0.1.zip) | 最新版本 |
+| v1.0.0 | [math-toolbox-v1.0.0.zip](./release/math-toolbox-v1.0.0.zip) | 初始版本 |
+
 ## ✨ 功能特点
 
 ### 🔢 基础计算
