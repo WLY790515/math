@@ -1,0 +1,33 @@
+{
+  "name": "math-toolbox",
+  "version": "1.0.0",
+  "description": "Math toolbox application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'Building web app...'",
+    "cap:init": "npx cap init",
+    "cap:add:android": "npx cap add android",
+    "cap:copy": "npx cap copy",
+    "cap:sync": "npx cap sync"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/cli": "^5.0.0",
+    "@capacitor/android": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "keywords": [
+    "math",
+    "toolbox",
+    "calculator",
+    "mobile"
+  ],
+  "author": "Math Toolbox Team",
+  "license": "MIT"
+}

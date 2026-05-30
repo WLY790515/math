@@ -1,0 +1,636 @@
+{
+  "title": "数学工具箱 - 多维度测试报告",
+  "generatedAt": "2026-05-29T13:18:39.617Z",
+  "summary": {
+    "total": 93,
+    "passed": 93,
+    "failed": 0,
+    "skipped": 0,
+    "passRate": "100.00%",
+    "duration": "20ms"
+  },
+  "testDimensions": {
+    "functional": {
+      "passed": 56,
+      "failed": 0,
+      "total": 56
+    },
+    "boundary": {
+      "passed": 17,
+      "failed": 0,
+      "total": 17
+    },
+    "performance": {
+      "passed": 5,
+      "failed": 0,
+      "total": 5
+    },
+    "accuracy": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "compatibility": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    }
+  },
+  "suites": {
+    "计算器模块 - 功能测试": {
+      "total": 14,
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确执行加法运算",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确执行减法运算",
+          "status": "passed",
+          "duration": 1
+        },
+        {
+          "name": "应该正确执行乘法运算",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确执行除法运算",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确执行幂运算",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算正弦值",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算余弦值",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算正切值",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算对数值",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算自然对数",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算平方根",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确返回π值",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确返回e值",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算百分比",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "计算器模块 - 边界测试": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "除以零应该返回错误",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理大数运算",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理连续运算",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理退格操作",
+          "status": "passed",
+          "duration": 1
+        },
+        {
+          "name": "应该正确处理小数点输入",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该防止重复输入小数点",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "计算器模块 - 性能测试": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "连续计算100次加法应该在合理时间内完成",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "科学计算函数应该在合理时间内完成",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "单位转换模块 - 功能测试": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确转换长度单位 (米到千米)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换长度单位 (米到厘米)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换面积单位 (平方米到公顷)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换体积单位 (升到毫升)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换重量单位 (千克到克)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换温度 (摄氏度到华氏度)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换温度 (摄氏度到开尔文)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换温度 (华氏度到摄氏度)",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "单位转换模块 - 边界测试": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确处理零值转换",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理负值转换",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理极小值转换",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理极大值转换",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "进制转换模块 - 功能测试": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确转换十进制到二进制",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换十进制到八进制",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换十进制到十六进制",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换二进制到十进制",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换八进制到十进制",
+          "status": "passed",
+          "duration": 1
+        },
+        {
+          "name": "应该正确转换十六进制到十进制",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "进制转换模块 - 边界测试": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确处理零值转换",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理大数转换",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "无效输入应该返回null",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "代数工具模块 - 功能测试": {
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确求解一元一次方程",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确求解一元二次方程 (两个实根)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确求解一元二次方程 (一个实根)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确求解一元二次方程 (复数根)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确求解二元一次方程组",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算矩阵行列式 (2x2)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算矩阵行列式 (3x3)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确执行矩阵乘法",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确执行矩阵转置",
+          "status": "passed",
+          "duration": 1
+        }
+      ]
+    },
+    "代数工具模块 - 边界测试": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "一元一次方程 a=0 且 b=0 应该返回无穷多解",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "一元一次方程 a=0 且 b≠0 应该返回无解",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "二元一次方程组无解的情况",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "二元一次方程组无穷多解的情况",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "几何工具模块 - 功能测试": {
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确计算三角形面积",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算三角形周长",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算矩形面积",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算矩形周长",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算圆面积",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算圆周长",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算立方体体积",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算立方体表面积",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算球体体积",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算球体表面积",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算圆柱体体积",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算圆柱体表面积",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "几何工具模块 - 坐标转换测试": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确转换直角坐标到极坐标",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确转换极坐标到直角坐标",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理原点坐标",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "统计工具模块 - 功能测试": {
+      "total": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确计算平均值",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算中位数 (奇数个)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算中位数 (偶数个)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算众数",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算方差",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算标准差",
+          "status": "passed",
+          "duration": 1
+        },
+        {
+          "name": "应该正确计算范围",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "统计工具模块 - 概率计算测试": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "应该正确计算阶乘",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算排列 P(n,r)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算组合 C(n,r)",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确计算正态分布CDF",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理无效的排列参数",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "应该正确处理无效的组合参数",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "统计工具模块 - 准确性测试": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "大数据集统计计算应该准确",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "浮点数数据统计计算应该准确",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "负数数据统计计算应该准确",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "兼容性测试 - 输入格式": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "计算器应该处理字符串数字输入",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "单位转换应该处理整数和浮点数",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "统计计算应该处理不同类型的数据",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    },
+    "性能测试 - 大数据量": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "大数据集统计计算应该在合理时间内完成",
+          "status": "passed",
+          "duration": 10
+        },
+        {
+          "name": "矩阵运算应该在合理时间内完成",
+          "status": "passed",
+          "duration": 0
+        },
+        {
+          "name": "大量单位转换应该在合理时间内完成",
+          "status": "passed",
+          "duration": 0
+        }
+      ]
+    }
+  },
+  "errors": [],
+  "recommendations": []
+}

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学工具箱 - 多维度测试报告</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .header .date {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8fafc;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .summary-card .number {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .summary-card .label {
+            color: #64748b;
+            font-size: 1.1em;
+        }
+        
+        .summary-card.total .number { color: #3b82f6; }
+        .summary-card.passed .number { color: #10b981; }
+        .summary-card.failed .number { color: #ef4444; }
+        .summary-card.rate .number { color: #8b5cf6; }
+        
+        .dimensions {
+            padding: 30px;
+        }
+        
+        .dimensions h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dimensions h2::before {
+            content: '📊';
+            font-size: 1.2em;
+        }
+        
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .dimension-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid;
+        }
+        
+        .dimension-card.functional { border-color: #3b82f6; }
+        .dimension-card.boundary { border-color: #f59e0b; }
+        .dimension-card.performance { border-color: #ef4444; }
+        .dimension-card.accuracy { border-color: #10b981; }
+        .dimension-card.compatibility { border-color: #8b5cf6; }
+        
+        .dimension-card h3 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #334155;
+        }
+        
+        .progress-bar {
+            background: #e2e8f0;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .dimension-card.functional .progress-fill { background: #3b82f6; }
+        .dimension-card.boundary .progress-fill { background: #f59e0b; }
+        .dimension-card.performance .progress-fill { background: #ef4444; }
+        .dimension-card.accuracy .progress-fill { background: #10b981; }
+        .dimension-card.compatibility .progress-fill { background: #8b5cf6; }
+        
+        .dimension-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: #64748b;
+        }
+        
+        .suites {
+            padding: 30px;
+            background: #f8fafc;
+        }
+        
+        .suites h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .suites h2::before {
+            content: '🧪';
+            font-size: 1.2em;
+        }
+        
+        .suite {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .suite-header {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .suite-header:hover {
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+        }
+        
+        .suite-header h3 {
+            font-size: 1.1em;
+            color: #334155;
+        }
+        
+        .suite-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+        }
+        
+        .suite-stats span {
+            padding: 3px 10px;
+            border-radius: 15px;
+        }
+        
+        .suite-stats .passed {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .suite-stats .failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .suite-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .suite-content.expanded {
+            max-height: 2000px;
+        }
+        
+        .test-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .test-item:last-child {
+            border-bottom: none;
+        }
+        
+        .test-item .name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-item .status-icon {
+            font-size: 1.2em;
+        }
+        
+        .test-item .duration {
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        .test-item.failed {
+            background: #fef2f2;
+        }
+        
+        .test-item.failed .error {
+            color: #dc2626;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+        
+        .recommendations {
+            padding: 30px;
+        }
+        
+        .recommendations h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .recommendations h2::before {
+            content: '💡';
+            font-size: 1.2em;
+        }
+        
+        .recommendation-list {
+            list-style: none;
+        }
+        
+        .recommendation-list li {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            color: #92400e;
+        }
+        
+        .footer {
+            padding: 20px;
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .dimension-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧮 数学工具箱</h1>
+            <div class="subtitle">多维度测试报告</div>
+            <div class="date">生成时间: 2026-05-29 21:02:18</div>
+        </div>
+        
+        <div class="summary">
+            <div class="summary-card total">
+                <div class="number">93</div>
+                <div class="label">总测试数</div>
+            </div>
+            <div class="summary-card passed">
+                <div class="number">92</div>
+                <div class="label">通过 ✅</div>
+            </div>
+            <div class="summary-card failed">
+                <div class="number">1</div>
+                <div class="label">失败 ❌</div>
+            </div>
+            <div class="summary-card rate">
+                <div class="number">98.92%</div>
+                <div class="label">通过率</div>
+            </div>
+        </div>
+        
+        <div class="dimensions">
+            <h2>测试维度分析</h2>
+            <div class="dimension-grid">
+                <div class="dimension-card functional">
+                    <h3>📋 功能测试</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <div class="dimension-stats">
+                        <span>通过: 56/56</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                <div class="dimension-card boundary">
+                    <h3>⚠️ 边界测试</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <div class="dimension-stats">
+                        <span>通过: 17/17</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                <div class="dimension-card performance">
+                    <h3>⚡ 性能测试</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%"></div>
+                    </div>
+                    <div class="dimension-stats">
+                        <span>通过: 4/5</span>
+                        <span>80%</span>
+                    </div>
+                </div>
+                <div class="dimension-card accuracy">
+                    <h3>🎯 准确性测试</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <div class="dimension-stats">
+                        <span>通过: 3/3</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                <div class="dimension-card compatibility">
+                    <h3>🔄 兼容性测试</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <div class="dimension-stats">
+                        <span>通过: 3/3</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="suites">
+            <h2>测试套件详情</h2>
+            
+            <div class="suite">
+                <div class="suite-header" onclick="toggleSuite(this)">
+                    <h3>计算器模块 - 功能测试</h3>
+                    <div class="suite-stats">
+                        <span class="passed">✅ 14 通过</span>
+                    </div>
+                </div>
+                <div class="suite-content">
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确执行加法运算</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确执行减法运算</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确执行乘法运算</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确执行除法运算</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确执行幂运算</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算正弦值</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算余弦值</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算正切值</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算对数值</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算自然对数</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算平方根</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确返回π值</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确返回e值</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算百分比</div><div class="duration">0ms</div></div>
+                </div>
+            </div>
+            
+            <div class="suite">
+                <div class="suite-header" onclick="toggleSuite(this)">
+                    <h3>计算器模块 - 边界测试</h3>
+                    <div class="suite-stats">
+                        <span class="passed">✅ 6 通过</span>
+                    </div>
+                </div>
+                <div class="suite-content">
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>除以零应该返回错误</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确处理大数运算</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确处理连续运算</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确处理退格操作</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确处理小数点输入</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该防止重复输入小数点</div><div class="duration">0ms</div></div>
+                </div>
+            </div>
+            
+            <div class="suite">
+                <div class="suite-header" onclick="toggleSuite(this)">
+                    <h3>单位转换模块 - 功能测试</h3>
+                    <div class="suite-stats">
+                        <span class="passed">✅ 8 通过</span>
+                    </div>
+                </div>
+                <div class="suite-content">
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换长度单位 (米到千米)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换长度单位 (米到厘米)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换面积单位 (平方米到公顷)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换体积单位 (升到毫升)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换重量单位 (千克到克)</div><div class="duration">1ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换温度 (摄氏度到华氏度)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换温度 (摄氏度到开尔文)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换温度 (华氏度到摄氏度)</div><div class="duration">0ms</div></div>
+                </div>
+            </div>
+            
+            <div class="suite">
+                <div class="suite-header" onclick="toggleSuite(this)">
+                    <h3>进制转换模块 - 功能测试</h3>
+                    <div class="suite-stats">
+                        <span class="passed">✅ 6 通过</span>
+                    </div>
+                </div>
+                <div class="suite-content">
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换十进制到二进制</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换十进制到八进制</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换十进制到十六进制</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换二进制到十进制</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换八进制到十进制</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确转换十六进制到十进制</div><div class="duration">0ms</div></div>
+                </div>
+            </div>
+            
+            <div class="suite">
+                <div class="suite-header" onclick="toggleSuite(this)">
+                    <h3>代数工具模块 - 功能测试</h3>
+                    <div class="suite-stats">
+                        <span class="passed">✅ 9 通过</span>
+                    </div>
+                </div>
+                <div class="suite-content">
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确求解一元一次方程</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确求解一元二次方程 (两个实根)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确求解一元二次方程 (一个实根)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确求解一元二次方程 (复数根)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确求解二元一次方程组</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算矩阵行列式 (2x2)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算矩阵行列式 (3x3)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确执行矩阵乘法</div><div class="duration">1ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确执行矩阵转置</div><div class="duration">0ms</div></div>
+                </div>
+            </div>
+            
+            <div class="suite">
+                <div class="suite-header" onclick="toggleSuite(this)">
+                    <h3>几何工具模块 - 功能测试</h3>
+                    <div class="suite-stats">
+                        <span class="passed">✅ 12 通过</span>
+                    </div>
+                </div>
+                <div class="suite-content">
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算三角形面积</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算三角形周长</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算矩形面积</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算矩形周长</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算圆面积</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算圆周长</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算立方体体积</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算立方体表面积</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算球体体积</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算球体表面积</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算圆柱体体积</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算圆柱体表面积</div><div class="duration">0ms</div></div>
+                </div>
+            </div>
+            
+            <div class="suite">
+                <div class="suite-header" onclick="toggleSuite(this)">
+                    <h3>统计工具模块 - 功能测试</h3>
+                    <div class="suite-stats">
+                        <span class="passed">✅ 7 通过</span>
+                    </div>
+                </div>
+                <div class="suite-content">
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算平均值</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算中位数 (奇数个)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算中位数 (偶数个)</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算众数</div><div class="duration">1ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算方差</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算标准差</div><div class="duration">0ms</div></div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>应该正确计算范围</div><div class="duration">0ms</div></div>
+                </div>
+            </div>
+            
+            <div class="suite">
+                <div class="suite-header" onclick="toggleSuite(this)">
+                    <h3>性能测试 - 大数据量</h3>
+                    <div class="suite-stats">
+                        <span class="passed">✅ 2 通过</span>
+                        <span class="failed">❌ 1 失败</span>
+                    </div>
+                </div>
+                <div class="suite-content expanded">
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>大数据集统计计算应该在合理时间内完成</div><div class="duration">20ms</div></div>
+                    <div class="test-item failed">
+                        <div>
+                            <div class="name"><span class="status-icon">❌</span>矩阵运算应该在合理时间内完成</div>
+                            <div class="error">错误: 10x10矩阵行列式计算耗时 355ms，应该小于 50ms</div>
+                        </div>
+                        <div class="duration">355ms</div>
+                    </div>
+                    <div class="test-item"><div class="name"><span class="status-icon">✅</span>大量单位转换应该在合理时间内完成</div><div class="duration">0ms</div></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recommendations">
+            <h2>改进建议</h2>
+            <ul class="recommendation-list">
+                <li>存在失败的测试用例，建议检查错误日志并修复相关问题</li>
+                <li>性能测试存在失败，建议优化矩阵行列式计算算法效率。当前使用递归方法计算大矩阵行列式，时间复杂度为O(n!)，建议改用LU分解或其他更高效的算法。</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>数学工具箱 v1.0.0 | 测试报告生成于 2026-05-29 | 总耗时: 386ms</p>
+        </div>
+    </div>
+    
+    <script>
+        function toggleSuite(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>
