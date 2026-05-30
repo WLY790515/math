@@ -37,6 +37,9 @@ coverage/
 *.temp
 *.zip
 
+# Release packages (exception to *.zip rule)
+!release/*.zip
+
 # Mobile platforms (removed)
 android/
 ios/
