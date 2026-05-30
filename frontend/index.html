@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学工具箱 - Math Toolbox</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="app-container">
+        <main class="main-content">
+            <header class="top-bar">
+                <button class="btn btn-link menu-toggle" id="menuToggle">
+                    <i class="bi bi-list"></i> <span data-i18n="menu">菜单</span>
+                </button>
+                <div class="current-module" id="currentModule">
+                    <h1 data-i18n="calculator">科学计算器</h1>
+                </div>
+                <div class="top-bar-actions">
+                    <div class="language-selector">
+                        <select id="languageSelect" class="form-select form-select-sm">
+                            <option value="zh">中文</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="auth-section ms-3">
+                        <div id="userInfo" class="d-none">
+                            <span class="user-name me-2" id="userName"></span>
+                            <button class="btn btn-sm btn-outline-secondary" id="logoutBtn" data-i18n="logout">退出登录</button>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary" id="loginBtn" data-i18n="login">登录</button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area" id="contentArea">
+                <div class="module-container active" id="module-calculator">
+                    <div class="card calculator-card">
+                        <div class="card-body">
+                            <div class="calculator-display">
+                                <input type="text" id="calcDisplay" class="form-control" readonly>
+                                <div class="calc-history" id="calcHistory"></div>
+                            </div>
+                            <div class="calculator-buttons">
+                                <div class="btn-group-vertical w-100">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-secondary" data-action="clear">C</button>
+                                        <button type="button" class="btn btn-secondary" data-action="backspace">⌫</button>
+                                        <button type="button" class="btn btn-secondary" data-action="percent">%</button>
+                                        <button type="button" class="btn btn-warning" data-action="divide">÷</button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-light" data-action="7">7</button>
+                                        <button type="button" class="btn btn-light" data-action="8">8</button>
+                                        <button type="button" class="btn btn-light" data-action="9">9</button>
+                                        <button type="button" class="btn btn-warning" data-action="multiply">×</button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-light" data-action="4">4</button>
+                                        <button type="button" class="btn btn-light" data-action="5">5</button>
+                                        <button type="button" class="btn btn-light" data-action="6">6</button>
+                                        <button type="button" class="btn btn-warning" data-action="subtract">−</button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-light" data-action="1">1</button>
+                                        <button type="button" class="btn btn-light" data-action="2">2</button>
+                                        <button type="button" class="btn btn-light" data-action="3">3</button>
+                                        <button type="button" class="btn btn-warning" data-action="add">+</button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-light" data-action="0">0</button>
+                                        <button type="button" class="btn btn-light" data-action="dot">.</button>
+                                        <button type="button" class="btn btn-danger" data-action="equals">=</button>
+                                    </div>
+                                </div>
+                                <div class="scientific-buttons mt-3">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-action="sin">sin</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-action="cos">cos</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-action="tan">tan</button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-action="log">log</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-action="ln">ln</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-action="sqrt">√</button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-action="power">x^y</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-action="pi">π</button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-action="e">e</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-converter">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="unitConverter">单位转换器</h5>
+                            <div class="converter-form">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="category">类别</label>
+                                    <select id="converterCategory" class="form-select">
+                                        <option value="length" data-i18n="length">长度</option>
+                                        <option value="area" data-i18n="area">面积</option>
+                                        <option value="volume" data-i18n="volume">体积</option>
+                                        <option value="weight" data-i18n="weight">重量</option>
+                                        <option value="temperature" data-i18n="temperature">温度</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-i18n="from">从</label>
+                                            <input type="number" id="converterFrom" class="form-control">
+                                            <select id="converterFromUnit" class="form-select mt-2"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto d-flex align-items-center">
+                                        <button type="button" class="btn btn-primary" id="swapUnits">
+                                            <i class="bi bi-arrow-left-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-i18n="to">到</label>
+                                            <input type="text" id="converterTo" class="form-control" readonly>
+                                            <select id="converterToUnit" class="form-select mt-2"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-base">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="baseConverter">进制转换器</h5>
+                            <div class="base-converter">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="enterNumber">输入数字</label>
+                                    <input type="text" id="baseInput" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="fromBase">原始进制</label>
+                                    <select id="baseFrom" class="form-select">
+                                        <option value="2" data-i18n="binary">二进制 (2)</option>
+                                        <option value="8" data-i18n="octal">八进制 (8)</option>
+                                        <option value="10" selected data-i18n="decimal">十进制 (10)</option>
+                                        <option value="16" data-i18n="hexadecimal">十六进制 (16)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <button type="button" class="btn btn-primary" id="convertBase">
+                                        <i class="bi bi-arrow-down"></i> <span data-i18n="convert">转换</span>
+                                    </button>
+                                </div>
+                                <div class="base-results">
+                                    <div class="result-item">
+                                        <span class="result-label" data-i18n="binaryLabel">二进制:</span>
+                                        <span class="result-value" id="baseBin">0</span>
+                                        <button class="btn btn-sm btn-copy" data-copy="baseBin"><i class="bi bi-clipboard"></i></button>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label" data-i18n="octalLabel">八进制:</span>
+                                        <span class="result-value" id="baseOct">0</span>
+                                        <button class="btn btn-sm btn-copy" data-copy="baseOct"><i class="bi bi-clipboard"></i></button>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label" data-i18n="decimalLabel">十进制:</span>
+                                        <span class="result-value" id="baseDec">0</span>
+                                        <button class="btn btn-sm btn-copy" data-copy="baseDec"><i class="bi bi-clipboard"></i></button>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label" data-i18n="hexadecimalLabel">十六进制:</span>
+                                        <span class="result-value" id="baseHex">0</span>
+                                        <button class="btn btn-sm btn-copy" data-copy="baseHex"><i class="bi bi-clipboard"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-percentage">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="percentageCalc">百分比计算器</h5>
+                            <div class="percentage-calc">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="calculateWhat">计算什么?</label>
+                                    <select id="percentageType" class="form-select">
+                                        <option value="of" data-i18n="whatIsXOfY">X是Y的百分之几?</option>
+                                        <option value="is" data-i18n="XisWhatPercentOfY">X是Y的百分之几?</option>
+                                        <option value="ofNumber" data-i18n="whatIsXPercentOfY">X%是Y的百分之几?</option>
+                                        <option value="increase" data-i18n="increaseRate">增长率计算</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" id="percentageLabel1">数值1</label>
+                                            <input type="number" id="percentageVal1" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" id="percentageLabel2">数值2</label>
+                                            <input type="number" id="percentageVal2" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="calculatePercentage">
+                                    <span data-i18n="calculate">计算</span>
+                                </button>
+                                <div class="percentage-result mt-3">
+                                    <div class="alert alert-success">
+                                        <h4 id="percentageResult">0%</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-fraction">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="fractionCalc">分数计算器</h5>
+                            <div class="fraction-calc">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-i18n="numerator">分子</label>
+                                            <input type="number" id="fractionNum1" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-i18n="denominator">分母</label>
+                                            <input type="number" id="fractionDen1" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <select id="fractionOp" class="form-select w-auto d-inline-block">
+                                        <option value="+">+</option>
+                                        <option value="-">−</option>
+                                        <option value="*">×</option>
+                                        <option value="/">÷</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label">&nbsp;</label>
+                                            <input type="number" id="fractionNum2" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label">&nbsp;</label>
+                                            <input type="number" id="fractionDen2" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="calculateFraction">
+                                    <span data-i18n="calculate">计算</span>
+                                </button>
+                                <div class="fraction-result mt-3">
+                                    <div class="alert alert-success">
+                                        <h4 id="fractionResult">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-equation">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="equationSolver">方程求解器</h5>
+                            <div class="equation-solver">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="equationType">方程类型</label>
+                                    <select id="equationType" class="form-select">
+                                        <option value="linear" data-i18n="linearEquation">一元一次方程</option>
+                                        <option value="quadratic" data-i18n="quadraticEquation">一元二次方程</option>
+                                        <option value="system" data-i18n="systemEquation">二元一次方程组</option>
+                                    </select>
+                                </div>
+                                <div id="equationInputs"></div>
+                                <button type="button" class="btn btn-primary" id="solveEquation">
+                                    <span data-i18n="solve">求解</span>
+                                </button>
+                                <div class="equation-result mt-3">
+                                    <div class="alert alert-success" id="equationResult"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-factorization">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="factorizationTool">因式分解工具</h5>
+                            <div class="factorization-tool">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="enterExpression">输入表达式</label>
+                                    <input type="text" id="factorExpr" class="form-control" data-i18n="exprPlaceholder" placeholder="如: x^2 - 4">
+                                </div>
+                                <button type="button" class="btn btn-primary" id="factorizeBtn">
+                                    <span data-i18n="factorize">因式分解</span>
+                                </button>
+                                <div class="factorization-result mt-3">
+                                    <div class="alert alert-success" id="factorResult"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-polynomial">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="polynomialCalc">多项式运算</h5>
+                            <div class="polynomial-calc">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-i18n="polynomial1">多项式1</label>
+                                            <input type="text" id="poly1" class="form-control" data-i18n="poly1Placeholder" placeholder="如: x^2 + 2x + 1">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-i18n="polynomial2">多项式2</label>
+                                            <input type="text" id="poly2" class="form-control" data-i18n="poly2Placeholder" placeholder="如: x + 1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="operation">运算</label>
+                                    <select id="polyOp" class="form-select">
+                                        <option value="add" data-i18n="add">加</option>
+                                        <option value="subtract" data-i18n="subtract">减</option>
+                                        <option value="multiply" data-i18n="multiply">乘</option>
+                                        <option value="divide" data-i18n="divide">除</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="calculatePolynomial">
+                                    <span data-i18n="calculate">计算</span>
+                                </button>
+                                <div class="polynomial-result mt-3">
+                                    <div class="alert alert-success" id="polyResult"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-function-plot">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="functionPlotter">函数绘图器</h5>
+                            <div class="function-plotter">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="enterFunction">输入函数 (y =)</label>
+                                    <input type="text" id="functionInput" class="form-control" data-i18n="functionPlaceholder" placeholder="如: x^2, sin(x), exp(x)">
+                                </div>
+                                <button type="button" class="btn btn-primary" id="plotFunction">
+                                    <span data-i18n="plot">绘图</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="clearPlot">
+                                    <span data-i18n="clear">清除</span>
+                                </button>
+                                <div class="function-plot-container mt-3">
+                                    <canvas id="functionCanvas" width="600" height="400"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-matrix">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="matrixCalc">矩阵计算器</h5>
+                            <div class="matrix-calc">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="matrixOperation">运算</label>
+                                    <select id="matrixOp" class="form-select">
+                                        <option value="add" data-i18n="add">加</option>
+                                        <option value="subtract" data-i18n="subtract">减</option>
+                                        <option value="multiply" data-i18n="multiply">乘</option>
+                                        <option value="determinant" data-i18n="determinant">行列式</option>
+                                        <option value="inverse" data-i18n="inverse">逆矩阵</option>
+                                        <option value="transpose" data-i18n="transpose">转置</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="form-label" data-i18n="matrixA">矩阵 A</label>
+                                        <textarea id="matrixA" class="form-control" rows="3" placeholder="1,2;3,4"></textarea>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label" data-i18n="matrixB">矩阵 B</label>
+                                        <textarea id="matrixB" class="form-control" rows="3" placeholder="1,2;3,4"></textarea>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary mt-3" id="calculateMatrix">
+                                    <span data-i18n="calculate">计算</span>
+                                </button>
+                                <div class="matrix-result mt-3">
+                                    <div class="alert alert-success" id="matrixResult"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-activity-logs">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="card-title" data-i18n="activityLogs">操作记录</h5>
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" id="refreshLogs">
+                                        <i class="bi bi-arrow-clockwise"></i> <span data-i18n="refresh">刷新</span>
+                                    </button>
+                                    
+                                    <button type="button" class="btn btn-sm btn-outline-danger ms-2" id="clearLogs">
+                                        <i class="bi bi-trash"></i> <span data-i18n="clear">清空</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="activity-stats mb-4">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+                                                <h6 data-i18n="totalActions">总操作次数</h6>
+                                                <p class="h4" id="totalActions">0</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+                                                <h6 data-i18n="mostUsedTool">最常用工具</h6>
+                                                <p class="h4" id="mostUsedTool">-</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+                                                <h6 data-i18n="recentActions">最近操作</h6>
+                                                <p class="h4" id="recentActions">0</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-filter mb-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="toolFilter">
+                                            <option value="all" data-i18n="allTools">所有工具</option>
+                                            <option value="calculator-calc" data-i18n="calcScientific">科学计算器</option>
+                                            <option value="calculator-percent" data-i18n="calcPercent">百分比计算</option>
+                                            <option value="calculator-fraction" data-i18n="calcFraction">分数计算</option>
+                                            <option value="converter-unit" data-i18n="convUnit">单位转换</option>
+                                            <option value="converter-base" data-i18n="convBase">进制转换</option>
+                                            <option value="algebra-equation" data-i18n="algEquation">方程求解</option>
+                                            <option value="algebra-factor" data-i18n="algFactor">因式分解</option>
+                                            <option value="algebra-poly" data-i18n="algPoly">多项式运算</option>
+                                            <option value="algebra-plot" data-i18n="algPlot">函数绘图</option>
+                                            <option value="algebra-matrix" data-i18n="algMatrix">矩阵运算</option>
+                                            <option value="geometry-plane" data-i18n="geoPlane">平面几何</option>
+                                            <option value="geometry-solid" data-i18n="geoSolid">立体几何</option>
+                                            <option value="geometry-coord" data-i18n="geoCoord">坐标转换</option>
+                                            <option value="statistics-data" data-i18n="statData">数据统计</option>
+                                            <option value="statistics-prob" data-i18n="statProb">概率计算</option>
+                                            <option value="statistics-chart" data-i18n="statChart">统计图表</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="timeFilter">
+                                            <option value="all" data-i18n="allTime">所有时间</option>
+                                            <option value="24h" data-i18n="last24h">最近24小时</option>
+                                            <option value="7d" data-i18n="last7d">最近7天</option>
+                                            <option value="30d" data-i18n="last30d">最近30天</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-logs-controls mb-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center">
+                                            <label class="form-label me-2" data-i18n="layout">布局:</label>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-sm btn-outline-primary" id="gridLayout">
+                                                    <i class="bi bi-grid"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" id="listLayout">
+                                                    <i class="bi bi-list"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <label class="form-label me-2" data-i18n="size">大小:</label>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" id="smallSize">
+                                                    <i class="bi bi-dash"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary" id="mediumSize">
+                                                    <i class="bi bi-1-square"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" id="largeSize">
+                                                    <i class="bi bi-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-logs-grid" id="logsGrid">
+                                <div class="grid-item text-center" data-i18n="noLogs">
+                                    暂无操作记录
+                                </div>
+                            </div>
+                            
+                            <!-- 操作记录详情模态框 -->
+                            <div class="modal fade" id="logDetailModal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" data-i18n="logDetail">操作详情</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" id="logDetailContent">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="close">关闭</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-plane-geometry">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="planeGeometryCalc">平面几何计算</h5>
+                            <div class="plane-geometry-calc">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="shape">选择图形</label>
+                                    <select id="planeShape" class="form-select">
+                                        <option value="triangle" data-i18n="triangle">三角形</option>
+                                        <option value="rectangle" data-i18n="rectangle">矩形</option>
+                                        <option value="circle" data-i18n="circle">圆形</option>
+                                        <option value="parallelogram" data-i18n="parallelogram">平行四边形</option>
+                                        <option value="trapezoid" data-i18n="trapezoid">梯形</option>
+                                    </select>
+                                </div>
+                                <div id="planeInputs"></div>
+                                <button type="button" class="btn btn-primary" id="calculatePlane">
+                                    <span data-i18n="calculate">计算</span>
+                                </button>
+                                <div class="plane-result mt-3">
+                                    <div class="alert alert-success" id="planeResult"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-solid-geometry">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="solidGeometryCalc">立体几何计算</h5>
+                            <div class="solid-geometry-calc">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="shape">选择图形</label>
+                                    <select id="solidShape" class="form-select">
+                                        <option value="cube" data-i18n="cube">立方体</option>
+                                        <option value="sphere" data-i18n="sphere">球体</option>
+                                        <option value="cylinder" data-i18n="cylinder">圆柱体</option>
+                                        <option value="cone" data-i18n="cone">圆锥体</option>
+                                        <option value="pyramid" data-i18n="pyramid">棱锥</option>
+                                    </select>
+                                </div>
+                                <div id="solidInputs"></div>
+                                <button type="button" class="btn btn-primary" id="calculateSolid">
+                                    <span data-i18n="calculate">计算</span>
+                                </button>
+                                <div class="solid-result mt-3">
+                                    <div class="alert alert-success" id="solidResult"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-coordinate">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="coordinateTransform">坐标转换</h5>
+                            <div class="coordinate-transform">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="coordinateType">坐标类型</label>
+                                    <select id="coordType" class="form-select">
+                                        <option value="cartesian" data-i18n="cartesian">直角坐标</option>
+                                        <option value="polar" data-i18n="polar">极坐标</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" id="coordLabel1">X</label>
+                                            <input type="number" id="coordVal1" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" id="coordLabel2">Y</label>
+                                            <input type="number" id="coordVal2" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="convertCoord">
+                                    <span data-i18n="convert">转换</span>
+                                </button>
+                                <div class="coordinate-result mt-3">
+                                    <div class="alert alert-success" id="coordResult"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-statistics">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="statisticsCalc">数据统计分析</h5>
+                            <div class="statistics-calc">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="enterData">输入数据 (逗号分隔)</label>
+                                    <textarea id="statsData" class="form-control" rows="3" placeholder="1, 2, 3, 4, 5"></textarea>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="calculateStats">
+                                    <span data-i18n="calculate">计算</span>
+                                </button>
+                                <div class="stats-results mt-3">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="alert alert-info">
+                                                <p><strong data-i18n="mean">均值:</strong> <span id="statsMean">0</span></p>
+                                                <p><strong data-i18n="median">中位数:</strong> <span id="statsMedian">0</span></p>
+                                                <p><strong data-i18n="mode">众数:</strong> <span id="statsMode">0</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="alert alert-info">
+                                                <p><strong data-i18n="variance">方差:</strong> <span id="statsVariance">0</span></p>
+                                                <p><strong data-i18n="stdDev">标准差:</strong> <span id="statsStdDev">0</span></p>
+                                                <p><strong data-i18n="range">范围:</strong> <span id="statsRange">0</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-probability">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="probabilityCalc">概率计算器</h5>
+                            <div class="probability-calc">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="calculationType">计算类型</label>
+                                    <select id="probType" class="form-select">
+                                        <option value="permutation" data-i18n="permutation">排列 (P)</option>
+                                        <option value="combination" data-i18n="combination">组合 (C)</option>
+                                        <option value="normal" data-i18n="normalDistribution">正态分布</option>
+                                    </select>
+                                </div>
+                                <div id="probInputs"></div>
+                                <button type="button" class="btn btn-primary" id="calculateProb">
+                                    <span data-i18n="calculate">计算</span>
+                                </button>
+                                <div class="probability-result mt-3">
+                                    <div class="alert alert-success">
+                                        <h4 id="probResult">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-container" id="module-charts">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-i18n="chartGenerator">统计图表生成器</h5>
+                            <div class="chart-generator">
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="chartType">图表类型</label>
+                                    <select id="chartType" class="form-select">
+                                        <option value="bar" data-i18n="barChart">柱状图</option>
+                                        <option value="line" data-i18n="lineChart">折线图</option>
+                                        <option value="pie" data-i18n="pieChart">饼图</option>
+                                        <option value="doughnut" data-i18n="doughnutChart">环形图</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="chartData">图表数据 (标签:数值, 逗号分隔)</label>
+                                    <input type="text" id="chartLabels" class="form-control" placeholder="January,February,March,April">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-i18n="chartValues">数值 (逗号分隔)</label>
+                                    <input type="text" id="chartValues" class="form-control" placeholder="10, 20, 30, 40">
+                                </div>
+                                <button type="button" class="btn btn-primary" id="generateChart">
+                                    <span data-i18n="generate">生成图表</span>
+                                </button>
+                                <div class="chart-container mt-3">
+                                    <canvas id="statsChart" width="600" height="400"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="bottom-bar">
+                <div class="footer-info">
+                    <span>v1.0.0</span>
+                    <span data-i18n="mathToolbox">数学工具箱</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#" data-i18n="help">帮助</a>
+                    <a href="#" data-i18n="about">关于</a>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- 菜单弹窗 -->
+    <div class="modal fade" id="menuModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-grid-3x3-gap"></i> <span data-i18n="selectTool">选择工具</span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="menu-grid">
+                        <div class="menu-category">
+                            <h6 data-i18n="basic">基础计算</h6>
+                            <div class="menu-items">
+                                <button class="menu-item" data-module="calculator">
+                                    <i class="bi bi-calculator"></i>
+                                    <span data-i18n="calculator">科学计算器</span>
+                                </button>
+                                <button class="menu-item" data-module="converter">
+                                    <i class="bi bi-exchange"></i>
+                                    <span data-i18n="converter">单位转换</span>
+                                </button>
+                                <button class="menu-item" data-module="base">
+                                    <i class="bi bi-code"></i>
+                                    <span data-i18n="baseConversion">进制转换</span>
+                                </button>
+                                <button class="menu-item" data-module="percentage">
+                                    <i class="bi bi-percent"></i>
+                                    <span data-i18n="percentage">百分比计算</span>
+                                </button>
+                                <button class="menu-item" data-module="fraction">
+                                    <i class="bi bi-123"></i>
+                                    <span data-i18n="fraction">分数计算</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="menu-category">
+                            <h6 data-i18n="algebra">代数工具</h6>
+                            <div class="menu-items">
+                                <button class="menu-item" data-module="equation">
+                                    <i class="bi bi-equals"></i>
+                                    <span data-i18n="equation">方程求解</span>
+                                </button>
+                                <button class="menu-item" data-module="factorization">
+                                    <i class="bi bi-multiplication"></i>
+                                    <span data-i18n="factorization">因式分解</span>
+                                </button>
+                                <button class="menu-item" data-module="polynomial">
+                                    <i class="bi bi-polynomial"></i>
+                                    <span data-i18n="polynomial">多项式运算</span>
+                                </button>
+                                <button class="menu-item" data-module="function-plot">
+                                    <i class="bi bi-graph-up"></i>
+                                    <span data-i18n="functionPlot">函数绘图</span>
+                                </button>
+                                <button class="menu-item" data-module="matrix">
+                                    <i class="bi bi-grid"></i>
+                                    <span data-i18n="matrix">矩阵运算</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="menu-category">
+                            <h6 data-i18n="geometry">几何工具</h6>
+                            <div class="menu-items">
+                                <button class="menu-item" data-module="plane-geometry">
+                                    <i class="bi bi-square"></i>
+                                    <span data-i18n="planeGeometry">平面几何</span>
+                                </button>
+                                <button class="menu-item" data-module="solid-geometry">
+                                    <i class="bi bi-cube"></i>
+                                    <span data-i18n="solidGeometry">立体几何</span>
+                                </button>
+                                <button class="menu-item" data-module="coordinate">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span data-i18n="coordinate">坐标转换</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="menu-category">
+                            <h6 data-i18n="statistics">统计与概率</h6>
+                            <div class="menu-items">
+                                <button class="menu-item" data-module="statistics">
+                                    <i class="bi bi-bar-chart"></i>
+                                    <span data-i18n="dataStats">数据统计</span>
+                                </button>
+                                <button class="menu-item" data-module="probability">
+                                    <i class="bi bi-dice-6"></i>
+                                    <span data-i18n="probabilityCalc">概率计算</span>
+                                </button>
+                                <button class="menu-item" data-module="charts">
+                                    <i class="bi bi-pie-chart"></i>
+                                    <span data-i18n="charts">统计图表</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="menu-category">
+                            <h6 data-i18n="activity">活动日志</h6>
+                            <div class="menu-items">
+                                <button class="menu-item" data-module="activity-logs">
+                                    <i class="bi bi-clock-history"></i>
+                                    <span data-i18n="activityLogs">操作记录</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+    <!-- 登录/注册模态框 -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="authModalTitle" data-i18n="login">登录</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 登录表单 -->
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label" data-i18n="email">邮箱</label>
+                            <input type="email" id="loginEmail" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" data-i18n="password">密码</label>
+                            <input type="password" id="loginPassword" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" data-i18n="login">登录</button>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <span data-i18n="noAccount">还没有账号?</span>
+                        <button type="button" class="btn btn-link p-0 ms-1" id="switchToRegister" data-i18n="register">立即注册</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="w-100">
+                        <!-- 注册表单 -->
+                        <form id="registerForm" class="d-none">
+                            <div class="mb-3">
+                                <label class="form-label" data-i18n="username">用户名</label>
+                                <input type="text" id="registerUsername" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" data-i18n="email">邮箱</label>
+                                <input type="email" id="registerEmail" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" data-i18n="password">密码</label>
+                                <input type="password" id="registerPassword" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100" data-i18n="register">注册</button>
+                        </form>
+                        
+                        <div id="authError" class="alert alert-danger d-none"></div>
+                        
+                        <div id="switchToLoginDiv" class="d-none text-center mt-3">
+                            <span data-i18n="haveAccount">已有账号?</span>
+                            <button type="button" class="btn btn-link p-0 ms-1" id="switchToLogin" data-i18n="login">立即登录</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/core/i18n.js"></script>
+    <script src="js/core/logger.js"></script>
+    <script src="js/core/calculator.js"></script>
+    <script src="js/core/converter.js"></script>
+    <script src="js/modules/basic-calc.js"></script>
+    <script src="js/modules/algebra.js"></script>
+    <script src="js/modules/geometry.js"></script>
+    <script src="js/modules/statistics.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
